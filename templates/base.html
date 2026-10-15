@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Retail Intelligence{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.468.0/lucide.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}">
+      <span class="brand-mark"><i data-lucide="chart-no-axes-combined"></i></span>
+      <span class="brand-copy"><b>RETAIL</b><small>INTELLIGENCE</small></span>
+      <button class="icon-button sidebar-toggle" id="sidebarToggle" aria-label="Ciutkan navigasi"><i data-lucide="panel-left-close"></i></button>
+    </a>
+    <div class="nav-caption">ANALYTICS WORKSPACE</div>
+    <nav class="nav-list">
+      {% for key,label,icon,desc in nav %}
+      <a class="nav-link {% if active == key %}active{% endif %}" href="{% if key == 'overview' %}{{ url_for('dashboard') }}{% else %}{{ url_for('page', page=key) }}{% endif %}" title="{{ desc }}">
+        <i data-lucide="{{ icon }}"></i><span>{{ label }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="system-chip"><span class="pulse"></span><span>Local analytics engine</span></div>
+      <small>Academic BI workspace · v1.0</small>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <button class="icon-button mobile-menu" id="mobileMenu" aria-label="Buka navigasi"><i data-lucide="menu"></i></button>
+      <div class="breadcrumb"><span>Workspace</span><i data-lucide="chevron-right"></i><b>{% block crumb %}Overview{% endblock %}</b></div>
+      <div class="top-actions">
+        <span class="source-pill analyst-pill" {% if analyst %}title="Sesi analisis oleh {{ analyst }}"{% endif %}><i data-lucide="user-round"></i><span id="topAnalyst">{{ analyst or 'Analis' }}</span></span>
+        <span class="source-pill"><span class="pulse"></span><span id="topDataset">{{ source_name or 'Belum ada dataset' }}</span></span>
+        <button class="button button-quiet" id="resetButton"><i data-lucide="rotate-ccw"></i><span>Reset</span></button>
+      </div>
+    </header>
+    <section class="page-content">
+      {% block content %}{% endblock %}
+      <footer class="footer"><span>RETAIL INTELLIGENCE</span><span>Data-driven decisions · Evidence before assumptions</span></footer>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<div class="modal-backdrop" id="confirmModal" hidden>
+  <div class="modal-card"><span class="modal-icon"><i data-lucide="alert-triangle"></i></span><h3>Reset workspace?</h3><p>Dataset aktif, hasil analisis, filter, dan status proses akan dibersihkan. File sumber dan ekspor tersimpan tidak dihapus.</p><div class="modal-actions"><button class="button button-quiet" id="cancelReset">Batal</button><button class="button button-danger" id="confirmReset">Ya, reset data</button></div></div>
+</div>
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

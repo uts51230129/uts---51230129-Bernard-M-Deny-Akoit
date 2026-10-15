@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Overview · Retail Intelligence{% endblock %}
+{% block crumb %}Executive Overview{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
+  <div class="hero-content">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> PREMIUM ENTERPRISE ANALYTICS</div>
+    <h1>Retail intelligence,<br><span>grounded in data.</span></h1>
+    <p>Integrasi Data Mining dan Business Intelligence untuk memahami performa transaksi, menemukan pola pembelian, dan membangun strategi pelanggan berbasis bukti.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('page', page='dataset') }}" class="button button-primary"><i data-lucide="upload-cloud"></i> Kelola Dataset</a>
+      <a href="{{ url_for('page', page='reports') }}" class="button button-outline"><i data-lucide="file-chart-column"></i> Laporan & Ekspor</a>
+    </div>
+  </div>
+  <div class="hero-visual"><div class="visual-ring ring-a"></div><div class="visual-ring ring-b"></div><div class="visual-core"><i data-lucide="chart-no-axes-combined"></i></div><div class="float-tag tag-top"><i data-lucide="database"></i> Data integrity</div><div class="float-tag tag-bottom"><i data-lucide="brain-circuit"></i> Data mining</div></div>
+</section>
+<div class="section-heading"><div><div class="eyebrow">EXECUTIVE SNAPSHOT</div><h2>Ringkasan analisis</h2><p>Nilai di bawah hanya muncul setelah dataset diproses.</p></div><span class="status-badge {% if has_data %}status-info{% else %}status-muted{% endif %}"><span class="status-dot"></span>{% if has_data %}Dataset dimuat{% else %}Menunggu dataset{% endif %}</span></div>
+<div class="kpi-grid">
+  <article class="kpi-card kpi-featured"><div class="kpi-top"><span>Total net sales*</span><i data-lucide="wallet"></i></div><div class="kpi-value" id="kpiSales">{% if results and results.net_sales is not none %}Rp {{ "{:,.0f}".format(results.net_sales).replace(",", ".") }}{% else %}—{% endif %}</div><div class="kpi-foot">Agregasi sementara setelah filter validitas</div></article>
+  <article class="kpi-card"><div class="kpi-top"><span>Transaksi unik</span><i data-lucide="receipt-text"></i></div><div class="kpi-value" id="kpiTransactions">{{ results.transactions|thousand if results and results.transactions is not none else '—' }}</div><div class="kpi-foot">Berdasarkan ID transaksi terdeteksi</div></article>
+  <article class="kpi-card"><div class="kpi-top"><span>Pelanggan unik</span><i data-lucide="users"></i></div><div class="kpi-value" id="kpiCustomers">{{ results.customers|thousand if results and results.customers is not none else '—' }}</div><div class="kpi-foot">ID pelanggan tidak kosong</div></article>
+  <article class="kpi-card"><div class="kpi-top"><span>Rata-rata basket</span><i data-lucide="shopping-basket"></i></div><div class="kpi-value" id="kpiBasket">{{ "%.2f"|format(results.basket_size) if results and results.basket_size is not none else '—' }}</div><div class="kpi-foot">Produk unik per transaksi</div></article>
+</div>
+<div class="notice notice-info"><i data-lucide="info"></i><div><b>Interpretasi yang bertanggung jawab</b><p>*Total net sales di versi ini adalah agregasi awal pada data bersih berdasarkan kolom total yang tersedia dan pemeriksaan kuantitas/harga. Verifikasi rumus transaksi serta aturan diskon pada Data Dictionary sebelum diperlakukan sebagai angka final.</p></div></div>
+<div class="section-heading"><div><div class="eyebrow">ANALYTICS PIPELINE</div><h2>Enam proses UAS</h2><p>Jalankan secara berurutan. Tahap algoritma bergantung pada preprocessing yang berhasil.</p></div><a class="text-link" href="{{ url_for('page', page='system') }}">Metodologi sistem <i data-lucide="arrow-up-right"></i></a></div>
+<div class="process-grid">
+  {% set processes = [
+    ('01','Business Understanding & EDA','10%','chart-no-axes-combined','eda'),
+    ('02','Data Preprocessing','25%','sliders-horizontal','preprocessing'),
+    ('03','Apriori / Market Basket','20%','network','apriori'),
+    ('04','K-Means Segmentation','20%','chart-scatter','segmentation'),
+    ('05','Business Intelligence','15%','panels-top-left','bi'),
+    ('06','Recommendations & Reporting','10%','file-chart-column','recommendations')
+  ] %}
+  {% for n,title,weight,icon,pagekey in processes %}
+  <a class="process-card" href="{{ url_for('page', page=pagekey) }}"><div class="process-top"><span class="process-number">{{ n }}</span><span class="weight-tag">{{ weight }}</span></div><span class="process-icon"><i data-lucide="{{ icon }}"></i></span><h3>{{ title }}</h3><span class="process-link">Buka modul <i data-lucide="arrow-up-right"></i></span></a>
+  {% endfor %}
+</div>
+<div class="dashboard-grid">
+  <article class="panel chart-panel"><div class="panel-heading"><div><h3>Tren penjualan bulanan</h3><p>Agregasi dari data bersih berdasarkan tanggal dan total</p></div><span class="mini-label">MONTHLY</span></div><div class="chart-wrap"><canvas id="monthlyChart"></canvas></div><div id="monthlyEmpty" class="chart-empty" {% if results and results.monthly_sales %}hidden{% endif %}><i data-lucide="chart-line"></i><b>Visualisasi menunggu data</b><span>Upload dataset dan jalankan analisis awal.</span></div></article>
+  <article class="panel chart-panel"><div class="panel-heading"><div><h3>Top produk berdasarkan penjualan</h3><p>Sepuluh produk teratas jika kolom terdeteksi</p></div><span class="mini-label">TOP 10</span></div><div class="chart-wrap"><canvas id="productsChart"></canvas></div><div id="productsEmpty" class="chart-empty" {% if results and results.top_products %}hidden{% endif %}><i data-lucide="package-search"></i><b>Belum ada agregasi produk</b><span>Hasil tampil setelah analisis awal.</span></div></article>
+</div>
+<div class="section-heading"><div><div class="eyebrow">PROCESS CONTROL</div><h2>Status proses</h2><p>Status nyata dari sesi analisis saat ini.</p></div></div>
+<div class="panel status-panel" id="statusPanel">
+  {% for key,label in [('eda','EDA'),('preprocessing','Preprocessing'),('validation','Validation'),('apriori','Apriori'),('kmeans','K-Means'),('bi','BI Dashboard'),('recommendations','Recommendations')] %}
+  <div class="status-row"><span>{{ label }}</span><span class="status-badge status-muted" data-status="{{ key }}">{{ status.get(key,'pending')|replace('_',' ')|title }}</span></div>
+  {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+window.initialResults = {{ results|tojson if results else 'null' }};
+window.initialStatus = {{ status|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

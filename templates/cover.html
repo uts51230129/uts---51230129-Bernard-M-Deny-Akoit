@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cover · Retail Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.468.0/lucide.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="cover-body">
+<div class="cover-shell">
+  <header class="cover-topbar">
+    <div class="cover-brand"><span class="brand-mark"><i data-lucide="chart-no-axes-combined"></i></span><span class="brand-copy"><b>RETAIL</b><small>INTELLIGENCE</small></span></div>
+    <span class="cover-tag"><span class="pulse"></span> Ujian Tengah Semester</span>
+  </header>
+
+  <section class="cover-hero">
+    <div class="cover-hero-copy">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> UJIAN TENGAH SEMESTER</div>
+      <h1>Retail Intelligence,<br><span>grounded in data.</span></h1>
+      <p class="cover-tagline">Integrasi Data Mining &amp; Business Intelligence — menemukan pola kombinasi produk, memsegmentasi pelanggan, dan menyusun rekomendasi bisnis berbasis bukti.</p>
+      <div class="cover-chips">
+        <span class="cover-chip"><i data-lucide="book-open"></i> Mata Kuliah: Business Intelligence</span>
+        <span class="cover-chip"><i data-lucide="calendar-days"></i> Semester 7</span>
+        <span class="cover-chip"><i data-lucide="file-chart-column"></i> Tugas UTS</span>
+      </div>
+    </div>
+    <aside class="cover-dev-card">
+      <img class="cover-dev-photo" src="{{ url_for('static', filename='img/deko.jpg') }}" alt="Foto Bernard M. Deny Akoit">
+      <div class="cover-dev-info">
+        <small>Pengembang</small>
+        <b>Bernard M. Deny Akoit</b>
+        <span>NPM 51230129</span>
+        <span>Program Studi Teknologi Informasi</span>
+      </div>
+    </aside>
+  </section>
+
+  <section class="cover-section">
+    <h2><i data-lucide="target"></i> Tujuan Sistem</h2>
+    <div class="cover-goals">
+      <article><span class="goal-icon"><i data-lucide="search"></i></span><div><b>Pemahaman data</b><p>Memahami struktur, distribusi, dan kualitas data transaksi melalui profiling &amp; EDA.</p></div></article>
+      <article><span class="goal-icon"><i data-lucide="sparkles"></i></span><div><b>Data siap analisis</b><p>Membersihkan data secara konservatif dengan jejak audit yang dapat ditelusuri.</p></div></article>
+      <article><span class="goal-icon"><i data-lucide="network"></i></span><div><b>Pola pembelian</b><p>Menemukan kombinasi produk yang sering dibeli bersama melalui Apriori.</p></div></article>
+      <article><span class="goal-icon"><i data-lucide="chart-scatter"></i></span><div><b>Segmentasi pelanggan</b><p>Mengelompokkan pelanggan dengan RFM &amp; K-Means untuk strategi yang terarah.</p></div></article>
+      <article><span class="goal-icon"><i data-lucide="lightbulb"></i></span><div><b>Keputusan berbasis bukti</b><p>Menerjemahkan hasil analisis menjadi rekomendasi dan KPI yang dapat dievaluasi.</p></div></article>
+    </div>
+  </section>
+
+  <section class="cover-section">
+    <h2><i data-lucide="workflow"></i> Alur Pengerjaan</h2>
+    <div class="cover-flow">
+      <div class="flow-step"><span>01</span><b>Upload &amp; EDA</b><small>Inspeksi struktur, profil kolom, distribusi</small></div>
+      <i data-lucide="chevron-right" class="flow-arrow"></i>
+      <div class="flow-step"><span>02</span><b>Preprocessing</b><small>Bersihkan data + log aturan</small></div>
+      <i data-lucide="chevron-right" class="flow-arrow"></i>
+      <div class="flow-step"><span>03</span><b>Validasi &amp; Audit</b><small>Aturan bisnis &amp; temuan</small></div>
+      <i data-lucide="chevron-right" class="flow-arrow"></i>
+      <div class="flow-step"><span>04</span><b>Apriori</b><small>Pola basket &amp; association rules</small></div>
+      <i data-lucide="chevron-right" class="flow-arrow"></i>
+      <div class="flow-step"><span>05</span><b>K-Means</b><small>RFM &amp; visualisasi cluster</small></div>
+      <i data-lucide="chevron-right" class="flow-arrow"></i>
+      <div class="flow-step"><span>06</span><b>Rekomendasi</b><small>Insight, KPI &amp; ekspor laporan</small></div>
+    </div>
+  </section>
+
+  <section class="cover-kpis">
+    <article class="kpi-card"><div class="kpi-top"><span>Modul analisis</span><i data-lucide="layout-dashboard"></i></div><div class="kpi-value">6</div><div class="kpi-foot">Tahap UAS terintegrasi</div></article>
+    <article class="kpi-card"><div class="kpi-top"><span>Algoritma data mining</span><i data-lucide="brain-circuit"></i></div><div class="kpi-value">2</div><div class="kpi-foot">Apriori &amp; K-Means</div></article>
+    <article class="kpi-card"><div class="kpi-top"><span>Dataset contoh</span><i data-lucide="database"></i></div><div class="kpi-value">18.513</div><div class="kpi-foot">Baris · 6.000 transaksi</div></article>
+    <article class="kpi-card"><div class="kpi-top"><span>Ekspor laporan</span><i data-lucide="file-check"></i></div><div class="kpi-value">2</div><div class="kpi-foot">Excel workbook &amp; PDF</div></article>
+  </section>
+
+  <section class="cover-start">
+    <form class="cover-start-form" method="post" action="{{ url_for('start_system') }}">
+      <div class="cover-start-copy">
+        <h2><i data-lucide="play-circle"></i> Mulai Sistem</h2>
+        <p>Masukkan nama Anda untuk memulai sesi analisis. Setelah masuk, Anda akan tiba di dashboard inti sistem.</p>
+      </div>
+      <div class="cover-start-fields">
+        <label class="cover-field">
+          <span>Nama analis</span>
+          <input type="text" name="analyst" id="coverAnalyst" placeholder="Contoh: Bernard M. Deny Akoit" maxlength="60" autocomplete="name" required>
+        </label>
+        <button class="button button-primary cover-start-button" type="submit">Masuk ke Dashboard <i data-lucide="arrow-right"></i></button>
+      </div>
+    </form>
+    <p class="cover-hint">Sesi hanya disimpan lokal di browser Anda · Data tidak dikirim ke mana pun</p>
+  </section>
+
+  <footer class="cover-footer"><span>RETAIL INTELLIGENCE</span><span>Bernard M. Deny Akoit · NPM 51230129 · Teknologi Informasi · Semester 7</span></footer>
+</div>
+<script>
+  if (window.lucide) window.lucide.createIcons();
+  document.querySelector(".cover-start-form")?.addEventListener("submit", e => {
+    const input = document.getElementById("coverAnalyst");
+    if (!input.value.trim()) { e.preventDefault(); input.focus(); }
+  });
+</script>
+</body></html>
